@@ -1,0 +1,4 @@
+/.idea
+task-management-boards.iml
+backend/node_modules
+backend/dist
