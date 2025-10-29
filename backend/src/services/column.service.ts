@@ -4,7 +4,7 @@ import { IColumn } from "../interfaces/column.interface";
 import { columnRepository } from "../repositories/column.repository";
 
 class ColumnService {
-    public async createColumn(data: Partial<IColumn>): Promise<IColumn> {
+    public async create(data: Partial<IColumn>): Promise<IColumn> {
         return await columnRepository.create(data);
     }
     public async findById(id: string): Promise<IColumn> {

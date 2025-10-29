@@ -22,7 +22,7 @@ class CardController {
         try {
             const { id } = req.params;
             const card = await cardService.updateCard(id, req.body);
-            res.json(card).status(StatusCodesEnum.CREATED);
+            res.status(StatusCodesEnum.CREATED).json(card);
         } catch (error) {
             next(error);
         }
@@ -35,6 +35,19 @@ class CardController {
             res.status(StatusCodesEnum.NO_CONTENT).send();
         } catch (error) {
             next(error);
+        }
+    }
+    public async getCardsByColumn(
+        req: Request,
+        res: Response,
+        next: NextFunction,
+    ) {
+        try {
+            const { columnId } = req.params;
+            const cards = await cardService.getCardsByColumnId(columnId);
+            res.status(StatusCodesEnum.OK).json(cards);
+        } catch (e) {
+            next(e);
         }
     }
 
@@ -52,7 +65,20 @@ class CardController {
                 destinationColumnId,
                 destinationIndex,
             );
-            res.json(result).status(StatusCodesEnum.OK);
+            res.status(StatusCodesEnum.OK).json(result);
+        } catch (error) {
+            next(error);
+        }
+    }
+    public async reorderCards(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { columnId, sourceIndex, destinationIndex } = req.body;
+            const result = await cardService.reorderCardsWithinColumn(
+                columnId,
+                sourceIndex,
+                destinationIndex,
+            );
+            res.status(StatusCodesEnum.OK).json(result);
         } catch (error) {
             next(error);
         }

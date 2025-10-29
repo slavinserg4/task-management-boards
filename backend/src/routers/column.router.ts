@@ -1,10 +1,17 @@
 import { Router } from "express";
 
 import { columnController } from "../controllers/column.controller";
+import { commonMiddleware } from "../middlewares/common.middleware";
 
 const router = Router();
-router.post("/", columnController.createColumn);
-router.get("/board/:boardId", columnController.getColumnsByBoard);
-router.put("/:id", columnController.updateColumn);
-router.delete("/:id", columnController.deleteColumn);
+router.get(
+    "/board/:boardId",
+    commonMiddleware.isIdValidate,
+    columnController.getColumnsByBoard,
+);
+router.get(
+    "/:id",
+    commonMiddleware.isIdValidate,
+    columnController.getColumnsById,
+);
 export const ColumnRouter = router;

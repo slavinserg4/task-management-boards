@@ -2,8 +2,8 @@ import { IBoard } from "../interfaces/board.interface";
 import { Board } from "../models/board.model";
 
 export class BoardRepository {
-    public create(name: string, hashId: string): Promise<IBoard> {
-        return Board.create({ name, hashId });
+    public create(title: string, hashId: string): Promise<IBoard> {
+        return Board.create({ title, hashId });
     }
     public getById(id: string): Promise<IBoard> {
         return Board.findById(id);

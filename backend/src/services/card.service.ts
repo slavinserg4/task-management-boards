@@ -39,10 +39,13 @@ class CardService {
         const column = await columnService.findById(card.columnId);
         column.cardIds = column.cardIds.filter((c) => c !== card._id);
         await columnService.updateColumn(column._id, column);
-        return await cardRepository.delete(id);
+        await cardRepository.delete(id);
     }
     public async getCardsByColumnId(columnId: string) {
-        return await cardRepository.getByColumnId(columnId);
+        const column = await cardRepository.getByColumnId(columnId);
+        if (!column)
+            throw new ApiError("Column not found", StatusCodesEnum.NOT_FOUND);
+        return column;
     }
     public async moveCard(
         cardId: string,
@@ -56,15 +59,12 @@ class CardService {
         if (!source || !destination)
             throw new ApiError("Column not found", StatusCodesEnum.NOT_FOUND);
 
-        // видаляємо картку з попередньої колонки
         source.cardIds = source.cardIds.filter(
             (id) => id.toString() !== cardId.toString(),
         );
 
-        // вставляємо у нову колонку на потрібну позицію
         destination.cardIds.splice(destinationIndex, 0, cardId as any);
 
-        // оновлюємо обидві колонки
         await columnService.updateColumn(source._id, {
             cardIds: source.cardIds,
         });
@@ -72,10 +72,27 @@ class CardService {
             cardIds: destination.cardIds,
         });
 
-        // оновлюємо саму картку
         await cardRepository.update(cardId, { columnId: destinationColumnId });
 
         return destination;
+    }
+    public async reorderCardsWithinColumn(
+        columnId: string,
+        sourceIndex: number,
+        destinationIndex: number,
+    ) {
+        const column = await columnService.findById(columnId);
+        if (!column)
+            throw new ApiError("Column not found", StatusCodesEnum.NOT_FOUND);
+
+        const [movedCard] = column.cardIds.splice(sourceIndex, 1);
+        column.cardIds.splice(destinationIndex, 0, movedCard);
+
+        await columnService.updateColumn(column._id, {
+            cardIds: column.cardIds,
+        });
+
+        return column;
     }
 }
 export const cardService = new CardService();
