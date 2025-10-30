@@ -7,17 +7,26 @@ class CardRepository {
     }
 
     public findById(id: string) {
-        return CardModel.findById(id);
+        return CardModel.findById(id)
+            .select("_id title description columnId createdAt updatedAt")
+            .lean();
     }
 
     public update(id: string, data: Partial<ICard>) {
-        return CardModel.findByIdAndUpdate(id, data, { new: true });
+        return CardModel.findByIdAndUpdate(id, data, { new: true })
+            .select("_id title description columnId createdAt updatedAt")
+            .lean();
     }
+
     public getByColumnId(columnId: string) {
-        return CardModel.findOne({ columnId });
+        return CardModel.find({ columnId })
+            .select("_id title description columnId createdAt updatedAt")
+            .lean();
     }
+
     public delete(id: string) {
         return CardModel.findByIdAndDelete(id);
     }
 }
+
 export const cardRepository = new CardRepository();

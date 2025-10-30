@@ -7,19 +7,38 @@ class ColumnRepository {
     }
 
     public findById(id: string) {
-        return Column.findById(id);
+        return Column.findById(id)
+            .populate({
+                path: "cardIds",
+                select: "_id title description columnId createdAt updatedAt",
+            })
+            .select("_id title boardId cardIds order createdAt updatedAt")
+            .lean();
     }
 
     public findByBoardId(boardId: string) {
-        return Column.find({ boardId }).populate("cardIds");
+        return Column.find({ boardId })
+            .populate({
+                path: "cardIds",
+                select: "_id title description columnId createdAt updatedAt",
+            })
+            .select("_id title boardId cardIds order createdAt updatedAt")
+            .lean();
     }
 
     public update(id: string, data: Partial<IColumn>) {
-        return Column.findByIdAndUpdate(id, data, { new: true });
+        return Column.findByIdAndUpdate(id, data, { new: true })
+            .populate({
+                path: "cardIds",
+                select: "_id title description columnId createdAt updatedAt",
+            })
+            .select("_id title boardId cardIds order createdAt updatedAt")
+            .lean();
     }
 
     public delete(id: string) {
         return Column.findByIdAndDelete(id);
     }
 }
+
 export const columnRepository = new ColumnRepository();

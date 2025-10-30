@@ -27,7 +27,6 @@ class CommonMiddleware {
     public validateBody(validator: ObjectSchema) {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
-                // Перевіряємо чи тіло запиту не пусте
                 if (!req.body || Object.keys(req.body).length === 0) {
                     throw new ApiError(
                         "body cannot be empty",

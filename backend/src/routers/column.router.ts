@@ -11,7 +11,7 @@ router.get(
 );
 router.get(
     "/:id",
-    commonMiddleware.isIdValidate,
+    commonMiddleware.isIdValidate("id"),
     columnController.getColumnsById,
 );
 export const ColumnRouter = router;

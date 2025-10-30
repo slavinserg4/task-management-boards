@@ -12,11 +12,15 @@ router.post(
 );
 router.put(
     "/:id",
-    commonMiddleware.isIdValidate,
+    commonMiddleware.isIdValidate("id"),
     commonMiddleware.validateBody(CardValidator.update),
     cardController.updateCard,
 );
-router.delete("/:id", commonMiddleware.isIdValidate, cardController.deleteCard);
+router.delete(
+    "/:id",
+    commonMiddleware.isIdValidate("id"),
+    cardController.deleteCard,
+);
 router.get(
     "/cardsbycolumn/:columnId",
     commonMiddleware.isIdValidate,

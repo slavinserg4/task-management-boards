@@ -10,17 +10,21 @@ router.post(
     commonMiddleware.validateBody(BoardValidator.create),
     boardController.createBoard,
 );
-router.get("/:id", commonMiddleware.isIdValidate, boardController.getBoardById);
+router.get(
+    "/:id",
+    commonMiddleware.isIdValidate("id"),
+    boardController.getBoardById,
+);
 router.get("/hash/:hashId", boardController.getBoardByHashId);
 router.put(
     "/:id",
-    commonMiddleware.isIdValidate,
+    commonMiddleware.isIdValidate("id"),
     commonMiddleware.validateBody(BoardValidator.update),
     boardController.updateBoard,
 );
 router.delete(
     "/:id",
-    commonMiddleware.isIdValidate,
+    commonMiddleware.isIdValidate("id"),
     boardController.deleteBoard,
 );
 
