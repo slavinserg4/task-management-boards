@@ -2,6 +2,9 @@ import { IBoard } from "../interfaces/board.interface";
 import { Board } from "../models/board.model";
 
 export class BoardRepository {
+    public getAllBoards(): Promise<IBoard[]> {
+        return Board.find();
+    }
     public create(title: string, hashId: string): Promise<IBoard> {
         return Board.create({ title, hashId });
     }

@@ -4,6 +4,14 @@ import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { boardService } from "../services/board.service";
 
 class BoardController {
+    public async getAllBoards(req: Request, res: Response, next: NextFunction) {
+        try {
+            const boards = await boardService.getAllBoards();
+            res.status(StatusCodesEnum.OK).json(boards);
+        } catch (error) {
+            next(error);
+        }
+    }
     public async createBoard(req: Request, res: Response, next: NextFunction) {
         try {
             const { title } = req.body;

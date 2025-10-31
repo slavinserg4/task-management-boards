@@ -1,0 +1,86 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.createCardForm {
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.formInput,
+.formTextarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.formInput:focus,
+.formTextarea:focus {
+    border-color: #0052cc;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0,82,204,0.2);
+}
+
+.formTextarea {
+    min-height: 60px;
+    max-height: 120px;
+    resize: vertical;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.submitBtn,
+.cancelBtn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    transition: all 0.2s ease;
+    font-family: 'Roboto', sans-serif;
+}
+
+.submitBtn {
+    background: #0052cc;
+    color: white;
+}
+
+.submitBtn:hover {
+    background: #0047b3;
+}
+
+.cancelBtn {
+    background: #ebecf0;
+    color: #172b4d;
+}
+
+.cancelBtn:hover {
+    background: #dfe1e6;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+    color: #97a0af;
+}
+
+.submitBtn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}

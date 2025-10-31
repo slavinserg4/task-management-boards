@@ -5,6 +5,7 @@ import { commonMiddleware } from "../middlewares/common.middleware";
 import { BoardValidator } from "../validators/board.validator";
 
 const router = Router();
+router.get("/", boardController.getAllBoards);
 router.post(
     "/",
     commonMiddleware.validateBody(BoardValidator.create),

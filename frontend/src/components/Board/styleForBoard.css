@@ -1,0 +1,131 @@
+.board {
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+.boardLinkContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.boardLink {
+    background: #0052cc;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.boardLink:hover {
+    background: #0041a8;
+    transform: translateY(-2px);
+}
+.boardHeader {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid rgba(9, 30, 66, 0.08);
+}
+
+.boardHeader h1 {
+    color: #172b4d;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.boardHash {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(9, 30, 66, 0.06);
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+}
+
+.hashLabel {
+    color: #5e6c84;
+    margin-right: 8px;
+    font-weight: 500;
+}
+
+.hashValue {
+    color: #0052cc;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.columnsContainer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    margin: 0 auto;
+    gap: 24px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+.Rejected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 200px;
+}
+.boardActions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.editBtn, .deleteBtn, .saveBtn, .cancelBtn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.editBtn {
+    background: #0052cc;
+    color: white;
+}
+.editBtn:hover {
+    background: #0041a8;
+}
+
+.deleteBtn {
+    background: #ef5350;
+    color: white;
+}
+.deleteBtn:hover {
+    background: #d32f2f;
+}
+
+.saveBtn {
+    background: #22c55e;
+    color: white;
+}
+.saveBtn:hover {
+    background: #16a34a;
+}
+
+.cancelBtn {
+    background: #EBECF0;
+    color: #172B4D;
+}
+.cancelBtn:hover {
+    background: #DFE1E6;
+}
+
+.editTitleInput {
+    padding: 6px 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #dfe1e6;
+    margin-right: 8px;
+}

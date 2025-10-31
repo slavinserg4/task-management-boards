@@ -1,0 +1,165 @@
+.column {
+    flex: 1;
+    min-width: 350px;
+    max-width: 450px;
+    background: #ebecf0;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    font-family: 'Roboto', sans-serif;
+}
+
+.columnHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #dfe1e6;
+}
+
+.columnHeader h3 {
+    color: #172b4d;
+    font-size: 18px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.addCardBtn {
+    background: #0052cc;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.addCardBtn:hover {
+    background: #0047b3;
+}
+
+/* === Cards === */
+.cardsContainer {
+    min-height: 100px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.cardTitle {
+    color: #172b4d;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+}
+
+.cardDescription {
+    color: #5e6c84;
+    font-size: 14px;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+/* === Buttons === */
+.deleteBtn, .editBtn {
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.deleteBtn {
+    background: #ef5350;
+    color: white;
+}
+
+.deleteBtn:hover {
+    background: #d32f2f;
+}
+
+.editBtn {
+    background: #0052cc;
+    color: white;
+}
+
+.editBtn:hover {
+    background: #0047b3;
+}
+
+/* === Edit mode === */
+.cardEditForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cardEditInput,
+.cardEditTextarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #dfe1e6;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.cardEditTextarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+.cardEditButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.saveBtn,
+.cancelBtn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.saveBtn {
+    background: #36b37e;
+    color: white;
+}
+
+.saveBtn:hover {
+    background: #2d9969;
+}
+
+.cancelBtn {
+    background: #ebecf0;
+    color: #172b4d;
+}
+
+.cancelBtn:hover {
+    background: #dfe1e6;
+}

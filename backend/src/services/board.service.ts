@@ -8,6 +8,9 @@ import { cardService } from "./card.service";
 import { columnService } from "./column.service";
 
 class BoardService {
+    public async getAllBoards(): Promise<IBoard[]> {
+        return await boardRepository.getAllBoards();
+    }
     public async createBoard(title: string): Promise<IBoard> {
         const hashId = generateHash();
         const board = await boardRepository.create(title, hashId);

@@ -1,0 +1,47 @@
+.menuContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.menuTitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.menuForm {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 8px 12px;
+    border-radius: 10px;
+    backdrop-filter: blur(6px);
+}
+
+.menuInput {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    width: 220px;
+    font-size: 1rem;
+}
+
+.menuButton {
+    background: #36b37e;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.menuButton:hover {
+    background: #2d9969;
+}
