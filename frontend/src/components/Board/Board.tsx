@@ -4,6 +4,7 @@ import "./styleForBoard.css"
 import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import { boardActions } from "../../redux/slices/boardSlice";
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import Column from "../Column/Column";
 
 export const Board = () => {
@@ -40,6 +41,34 @@ export const Board = () => {
         dispatch(boardActions.deleteBoard(currentBoard._id));
         navigate("/");
     };
+    const handleDragEnd = (result: DropResult) => {
+        const { destination, source, draggableId } = result;
+        if (!destination) return;
+
+
+        if (
+            destination.droppableId === source.droppableId &&
+            destination.index === source.index
+        ) {
+            return;
+        }
+
+        if (destination.droppableId !== source.droppableId) {
+            dispatch(boardActions.moveCard({
+                cardId: draggableId,
+                sourceColumnId: source.droppableId,
+                destinationColumnId: destination.droppableId,
+                destinationIndex: destination.index
+            }));
+        } else {
+
+            dispatch(boardActions.reorderCards({
+                columnId: source.droppableId,
+                sourceIndex: source.index,
+                destinationIndex: destination.index
+            }));
+        }
+    };
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div className="Rejected"><h2>Board not found</h2></div>;
@@ -73,11 +102,13 @@ export const Board = () => {
                 </div>
             </div>
 
-            <div className="columnsContainer">
-                {currentBoard.columnIds.map((column: any) => (
-                    <Column key={column._id} column={column} />
-                ))}
-            </div>
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <div className="columnsContainer">
+                    {currentBoard.columnIds.map(column => (
+                        <Column key={column._id} column={column} />
+                    ))}
+                </div>
+            </DragDropContext>
 
             <div className="boardLinkContainer">
                 <Link to="/" className="boardLink">Go to all your boards</Link>

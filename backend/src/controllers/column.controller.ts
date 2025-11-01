@@ -4,20 +4,6 @@ import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { columnService } from "../services/column.service";
 
 class ColumnController {
-    public async getColumnsByBoard(
-        req: Request,
-        res: Response,
-        next: NextFunction,
-    ) {
-        try {
-            const { boardId } = req.params;
-            const columns = await columnService.getColumnsByBoard(boardId);
-            res.status(StatusCodesEnum.OK).json(columns);
-        } catch (error) {
-            next(error);
-        }
-    }
-
     public async getColumnsById(
         req: Request,
         res: Response,

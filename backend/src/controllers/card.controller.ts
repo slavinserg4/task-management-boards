@@ -37,19 +37,6 @@ class CardController {
             next(error);
         }
     }
-    public async getCardsByColumn(
-        req: Request,
-        res: Response,
-        next: NextFunction,
-    ) {
-        try {
-            const { columnId } = req.params;
-            const cards = await cardService.getCardsByColumnId(columnId);
-            res.status(StatusCodesEnum.OK).json(cards);
-        } catch (e) {
-            next(e);
-        }
-    }
 
     public async moveCard(req: Request, res: Response, next: NextFunction) {
         try {
@@ -65,7 +52,9 @@ class CardController {
                 destinationColumnId,
                 destinationIndex,
             );
-            res.status(StatusCodesEnum.OK).json(result);
+            res.status(StatusCodesEnum.OK).json({
+                board: result.board,
+            });
         } catch (error) {
             next(error);
         }

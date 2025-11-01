@@ -5,19 +5,11 @@ class ColumnRepository {
     public create(data: Partial<IColumn>) {
         return Column.create(data);
     }
-
+    public findByIdWithIds(id: string) {
+        return Column.findById(id);
+    }
     public findById(id: string) {
         return Column.findById(id)
-            .populate({
-                path: "cardIds",
-                select: "_id title description columnId createdAt updatedAt",
-            })
-            .select("_id title boardId cardIds order createdAt updatedAt")
-            .lean();
-    }
-
-    public findByBoardId(boardId: string) {
-        return Column.find({ boardId })
             .populate({
                 path: "cardIds",
                 select: "_id title description columnId createdAt updatedAt",

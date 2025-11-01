@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IBoard } from "../models/IBoardModel";
 import { ICard } from "../models/ICardModel";
+import { IMoveCard } from "../models/IMoveCard";
 
 const axiosInstance = axios.create({
     baseURL: "/api"
@@ -60,8 +61,8 @@ export const cardService = {
         sourceColumnId: string;
         destinationColumnId: string;
         destinationIndex: number;
-    }): Promise<ICard> => {
-        const { data } = await axiosInstance.post<ICard>('/card/move', moveData);
+    }): Promise<IMoveCard> => {
+        const { data } = await axiosInstance.patch<IMoveCard>('/card/move', moveData);
         return data;
     },
     reorder: async (reorderData: {
@@ -69,7 +70,7 @@ export const cardService = {
         sourceIndex: number;
         destinationIndex: number;
     }): Promise<void> => {
-        await axiosInstance.post('/card/reorder', reorderData);
+        await axiosInstance.patch('/card/reorder', reorderData);
     }
 
 };

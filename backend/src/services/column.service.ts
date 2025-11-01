@@ -14,9 +14,6 @@ class ColumnService {
         }
         return column;
     }
-    public getColumnsByBoard(boardId: string): Promise<IColumn[]> {
-        return columnRepository.findByBoardId(boardId);
-    }
 
     public async updateColumn(
         id: string,

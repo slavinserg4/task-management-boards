@@ -2,6 +2,8 @@ import { IColumn } from "../../models/IColumnModel";
 import { FC, useState } from "react";
 import { Card } from "../Card/Card";
 import { CreateCard } from "../CreateCard/CreateCard";
+import { Droppable, Draggable } from '@hello-pangea/dnd';
+
 import "./styleForColumn.css"
 
 interface IProps {
@@ -22,17 +24,38 @@ const Column: FC<IProps> = ({column}) => {
                     + Add card
                 </button>
             </div>
-            <div className="cardsContainer">
-                {isCreating && (
-                    <CreateCard
-                        columnId={column._id}
-                        onClose={() => setIsCreating(false)}
-                    />
+            <Droppable droppableId={column._id}>
+                {(provided) => (
+                    <div
+                        className="cardsContainer"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                    >
+                        {isCreating && (
+                            <CreateCard
+                                columnId={column._id}
+                                onClose={() => setIsCreating(false)}
+                            />
+                        )}
+
+                        {column.cardIds.map((card, index) => (
+                            <Draggable key={card._id} draggableId={card._id} index={index}>
+                                {(provided) => (
+                                    <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                    >
+                                        <Card card={card} columnId={column._id} />
+                                    </div>
+                                )}
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
+                    </div>
                 )}
-                {column.cardIds.map(card =>
-                    <Card key={card._id} card={card} columnId={card.columnId}/>
-                )}
-            </div>
+            </Droppable>
+
         </div>
     );
 };

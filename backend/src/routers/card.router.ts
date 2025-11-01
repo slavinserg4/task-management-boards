@@ -21,17 +21,13 @@ router.delete(
     commonMiddleware.isIdValidate("id"),
     cardController.deleteCard,
 );
-router.get(
-    "/cardsbycolumn/:columnId",
-    commonMiddleware.isIdValidate,
-    cardController.getCardsByColumn,
-);
-router.post(
+
+router.patch(
     "/move",
     commonMiddleware.validateBody(CardValidator.move),
     cardController.moveCard,
 );
-router.post(
+router.patch(
     "/reorder",
     commonMiddleware.validateBody(CardValidator.reorder),
     cardController.reorderCards,

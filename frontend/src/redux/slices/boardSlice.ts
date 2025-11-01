@@ -125,7 +125,7 @@ export const moveCard = createAsyncThunk(
     }, thunkAPI) => {
         try {
             const card = await cardService.move(moveData);
-            return thunkAPI.fulfillWithValue({ ...moveData, card });
+            return thunkAPI.fulfillWithValue( card );
         } catch (e) {
             return thunkAPI.rejectWithValue(e);
         }
@@ -224,21 +224,9 @@ export const boardSlice = createSlice({
 
             .addCase(moveCard.fulfilled, (state, action) => {
                 if (!state.currentBoard) return;
-                const { card, sourceColumnId, destinationColumnId, destinationIndex } = action.payload;
+                state.currentBoard = action.payload.board;
 
-                const sourceColumn = state.currentBoard.columnIds.find(col => col._id === sourceColumnId);
-                const destColumn = state.currentBoard.columnIds.find(col => col._id === destinationColumnId);
-
-                if (sourceColumn && destColumn) {
-                    // видаляємо картку з джерела
-                    const movingCardIndex = sourceColumn.cardIds.findIndex(c => c._id === card._id);
-                    const movingCard = sourceColumn.cardIds[movingCardIndex];
-                    sourceColumn.cardIds.splice(movingCardIndex, 1);
-
-                    destColumn.cardIds.splice(destinationIndex, 0, movingCard);
-                }
             })
-
             .addCase(reorderCards.fulfilled, (state, action) => {
                 if (!state.currentBoard) return;
                 const { columnId, sourceIndex, destinationIndex } = action.payload;

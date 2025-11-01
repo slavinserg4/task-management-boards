@@ -1,7 +1,9 @@
 import { StatusCodesEnum } from "../enums/status-codes.enum";
 import { ApiError } from "../errors/api.error";
 import { ICard } from "../interfaces/card.interface";
+import { boardRepository } from "../repositories/board.repository";
 import { cardRepository } from "../repositories/card.repository";
+import { columnRepository } from "../repositories/column.repository";
 import { columnService } from "./column.service";
 
 class CardService {
@@ -41,56 +43,61 @@ class CardService {
         await columnService.updateColumn(column._id, column);
         await cardRepository.delete(id);
     }
-    public async getCardsByColumnId(columnId: string) {
-        const column = await cardRepository.getByColumnId(columnId);
-        if (!column)
-            throw new ApiError("Column not found", StatusCodesEnum.NOT_FOUND);
-        return column;
-    }
+
     public async moveCard(
         cardId: string,
         sourceColumnId: string,
         destinationColumnId: string,
         destinationIndex: number,
     ) {
-        const source = await columnService.findById(sourceColumnId);
+        const source = await columnRepository.findByIdWithIds(sourceColumnId);
         const destination = await columnService.findById(destinationColumnId);
+        const card = await cardRepository.findById(cardId);
 
-        if (!source || !destination)
-            throw new ApiError("Column not found", StatusCodesEnum.NOT_FOUND);
+        if (!source || !destination || !card) {
+            throw new ApiError(
+                "Card or Column not found",
+                StatusCodesEnum.NOT_FOUND,
+            );
+        }
 
         source.cardIds = source.cardIds.filter(
-            (id) => id.toString() !== cardId.toString(),
+            (id) => id.toString() !== card._id.toString(),
+        );
+        await columnService.updateColumn(source._id, source);
+
+        await cardRepository.delete(cardId);
+
+        const updatedCard = await this.createCard(
+            destinationColumnId,
+            card.title,
+            card.description,
         );
 
-        destination.cardIds.splice(destinationIndex, 0, cardId as any);
+        destination.cardIds.splice(destinationIndex, 0, updatedCard._id);
+        await columnService.updateColumn(destination._id, destination);
 
-        await columnService.updateColumn(source._id, {
-            cardIds: source.cardIds,
-        });
-        await columnService.updateColumn(destination._id, {
-            cardIds: destination.cardIds,
-        });
+        const board = await boardRepository.getById(source.boardId);
 
-        await cardRepository.update(cardId, { columnId: destinationColumnId });
-
-        return destination;
+        return {
+            board,
+        };
     }
+
     public async reorderCardsWithinColumn(
         columnId: string,
         sourceIndex: number,
         destinationIndex: number,
     ) {
-        const column = await columnService.findById(columnId);
-        if (!column)
+        const column = await columnRepository.findByIdWithIds(columnId);
+        if (!column) {
             throw new ApiError("Column not found", StatusCodesEnum.NOT_FOUND);
+        }
 
-        const [movedCard] = column.cardIds.splice(sourceIndex, 1);
-        column.cardIds.splice(destinationIndex, 0, movedCard);
+        const [movedCardId] = column.cardIds.splice(sourceIndex, 1);
+        column.cardIds.splice(destinationIndex, 0, movedCardId);
 
-        await columnService.updateColumn(column._id, {
-            cardIds: column.cardIds,
-        });
+        await columnService.updateColumn(column._id, column);
 
         return column;
     }
