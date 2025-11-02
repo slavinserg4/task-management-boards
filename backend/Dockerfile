@@ -5,6 +5,6 @@ MAINTAINER Some Dev
 RUN mkdir /app
 WORKDIR /app
 
-COPY ./backend/package.json .
+COPY ./package.json .
 
 RUN npm i
