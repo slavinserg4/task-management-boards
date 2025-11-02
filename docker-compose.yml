@@ -1,7 +1,7 @@
 services:
   app:
     build:
-      context: ./backend
+      context: .
     ports:
       - "5333:6000"
     env_file:
@@ -11,9 +11,9 @@ services:
       - /app/node_modules
     restart: on-failure
     command: >
-      sh -c "npm start"
+      sh -c "npm start"   
 
-#  db:
+    #  db:
 #    image: mongo
 #    ports:
 #      - "1234:27017"
