@@ -1,7 +1,7 @@
 services:
   app:
     build:
-      context: ./backend
+      context: .
     ports:
       - "5333:6000"
     env_file:
