@@ -44,7 +44,7 @@ export const Board = () => {
     const handleDragEnd = (result: DropResult) => {
         const { destination, source, draggableId } = result;
         if (!destination) return;
-
+        console.log(result);
 
         if (
             destination.droppableId === source.droppableId &&
