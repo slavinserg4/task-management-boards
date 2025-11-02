@@ -1,10 +1,10 @@
 FROM node:20-alpine
 
-MAINTAINER Some Dev
-
-RUN mkdir /app
 WORKDIR /app
 
-COPY ./package.json .
+COPY package.json package-lock.json* ./
+RUN npm install
 
-RUN npm i
+COPY . .
+
+CMD ["npm", "start"]
