@@ -78,7 +78,7 @@ export const deleteBoard = createAsyncThunk(
 // Card actions
 export const createCard = createAsyncThunk(
     'boardSlice/createCard',
-    async (cardData: { columnId: string; title: string; description: string }, thunkAPI) => {
+    async (cardData: { columnId: string; title: string; description?: string }, thunkAPI) => {
         try {
             const card = await cardService.create(cardData);
             return thunkAPI.fulfillWithValue({ card, columnId: cardData.columnId });

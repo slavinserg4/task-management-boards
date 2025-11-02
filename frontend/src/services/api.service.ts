@@ -35,7 +35,7 @@ export const boardService = {
 
 
 export const cardService = {
-    create: async (cardData: { columnId: string; title: string; description: string }): Promise<ICard> => {
+    create: async (cardData: { columnId: string; title: string; description?: string }): Promise<ICard> => {
         const { data } = await axiosInstance.post<ICard>('/card', cardData);
         return data;
     },

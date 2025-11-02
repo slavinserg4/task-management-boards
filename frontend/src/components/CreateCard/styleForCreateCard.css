@@ -84,3 +84,53 @@
     background: #ccc;
     cursor: not-allowed;
 }
+.createCardForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #fff;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.formInput, .formTextarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.formTextarea {
+    resize: none;
+    min-height: 60px;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.submitBtn, .cancelBtn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.submitBtn {
+    background: #007bff;
+    color: white;
+}
+
+.cancelBtn {
+    background: #f0f0f0;
+}
+
+.errorText {
+    color: red;
+    font-size: 13px;
+    margin-top: -5px;
+}

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styleForMenu.css"
+import "./styleForMenu.css";
 import { boardActions } from "../../redux/slices/boardSlice";
 import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
+import { boardValidator } from "../../validators/board.validator";
+
 const Menu = () => {
     const [hashId, setHashId] = useState("");
     const [title, setTitle] = useState("");
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
 
@@ -16,14 +20,25 @@ const Menu = () => {
             setHashId("");
         }
     };
+
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!title.trim()) return;
 
-        const result = await dispatch(boardActions.createBoard(title)).unwrap();
-        if(result && result.hashId){
-            navigate(`/board/${result.hashId}`);
-            setTitle("");
+        const { error } = boardValidator.create.validate({ title });
+        if (error) {
+            setErrorMsg(error.details[0].message);
+            return;
+        }
+
+        setErrorMsg(null);
+        try {
+            const result = await dispatch(boardActions.createBoard(title)).unwrap();
+            if (result && result.hashId) {
+                navigate(`/board/${result.hashId}`);
+                setTitle("");
+            }
+        } catch (err) {
+            setErrorMsg("Failed to create board. Please try again.");
         }
     };
 
@@ -43,6 +58,7 @@ const Menu = () => {
                     Search
                 </button>
             </form>
+
             <form onSubmit={handleCreate} className="menuForm">
                 <input
                     type="text"
@@ -51,11 +67,11 @@ const Menu = () => {
                     onChange={(e) => setTitle(e.target.value)}
                     className="menuInput"
                 />
+                {errorMsg && <p className="errorText">{errorMsg}</p>}
                 <button type="submit" className="menuButton">
                     Create
                 </button>
             </form>
-
         </div>
     );
 };

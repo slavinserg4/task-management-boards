@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from "react-router-dom";
-import "./styleForBoard.css"
+import "./styleForBoard.css";
 import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import { boardActions } from "../../redux/slices/boardSlice";
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import Column from "../Column/Column";
+import { boardValidator } from "../../validators/board.validator";
 
 export const Board = () => {
     const { hashId } = useParams<{ hashId: string }>();
@@ -15,23 +16,21 @@ export const Board = () => {
 
     const [editMode, setEditMode] = useState(false);
     const [title, setTitle] = useState("");
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (hashId) {
-            dispatch(boardActions.loadBoard(hashId));
-        }
-    }, [dispatch, hashId]);
+    useEffect(() => { if (hashId) dispatch(boardActions.loadBoard(hashId)); }, [dispatch, hashId]);
+    useEffect(() => { if (currentBoard) setTitle(currentBoard.title); }, [currentBoard]);
 
-    useEffect(() => {
-        if (currentBoard) setTitle(currentBoard.title);
-    }, [currentBoard]);
-
-    const handleEdit = () => {
-        setEditMode(true);
-    };
+    const handleEdit = () => setEditMode(true);
 
     const handleSave = () => {
         if (!currentBoard) return;
+        const { error } = boardValidator.update.validate({ title });
+        if (error) {
+            setErrorMsg(error.details[0].message);
+            return;
+        }
+        setErrorMsg(null);
         dispatch(boardActions.updateBoard({ id: currentBoard._id, title }));
         setEditMode(false);
     };
@@ -41,17 +40,12 @@ export const Board = () => {
         dispatch(boardActions.deleteBoard(currentBoard._id));
         navigate("/");
     };
+
     const handleDragEnd = (result: DropResult) => {
         const { destination, source, draggableId } = result;
         if (!destination) return;
-        console.log(result);
 
-        if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-        ) {
-            return;
-        }
+        if (destination.droppableId === source.droppableId && destination.index === source.index) return;
 
         if (destination.droppableId !== source.droppableId) {
             dispatch(boardActions.moveCard({
@@ -61,7 +55,6 @@ export const Board = () => {
                 destinationIndex: destination.index
             }));
         } else {
-
             dispatch(boardActions.reorderCards({
                 columnId: source.droppableId,
                 sourceIndex: source.index,
@@ -84,6 +77,7 @@ export const Board = () => {
                             onChange={(e) => setTitle(e.target.value)}
                             className="editTitleInput"
                         />
+                        {errorMsg && <p className="errorText">{errorMsg}</p>}
                         <button onClick={handleSave} className="saveBtn">Save</button>
                         <button onClick={() => setEditMode(false)} className="cancelBtn">Cancel</button>
                     </div>
