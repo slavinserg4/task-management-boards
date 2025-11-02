@@ -12,7 +12,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", ApiRouter);
-const PORT = config.PORT || 6000;
 
 app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
     const status = err.status || 500;
@@ -42,7 +41,7 @@ const dbConnection = async () => {
 const start = async () => {
     try {
         await dbConnection();
-        app.listen(PORT, async () => {
+        app.listen(config.PORT, async () => {
             console.log(`Server listening on ${config.PORT}`);
         });
     } catch (e) {

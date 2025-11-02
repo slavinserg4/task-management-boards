@@ -29,7 +29,7 @@ for it you need to remove env.db and in the file docker.compose delete db, and r
 
 ## Installation and Running with Docker
 
-1. Clone the repository:
+1. Clone the repository
 
 2. Configure environment variables:
 
@@ -48,19 +48,13 @@ MONGO_INITDB_DATABASE=boardstask
 MONGO_INITDB_ROOT_USERNAME=user
 MONGO_INITDB_ROOT_PASSWORD=user
 ```
-4. Install all dependencies
+3. Install all dependencies
 ```
 cd backend/
 npm install
 ```
 
-5. build the frontend app
-```
-cd frontend/
-npm i
-npm run watch
-```
-3. Run with Docker Compose:
+4. Run with Docker Compose:
 ```
 bash
 # Build and start containers
@@ -69,6 +63,14 @@ docker-compose up --build
 # Stop containers
 docker-compose down
 ```
+5. build the frontend app
+```
+cd frontend/
+npm i
+npm run watch
+```
+
+
 The API will be available at `http://localhost:YOUR_PORT`
 MongoDB will be available at `localhost:YOUR_PORT`
 The frontend can be accessed in the browser at`http://localhost`
